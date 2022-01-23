@@ -1,11 +1,11 @@
   applications:
   - name: djangoapp
     routes:
-      - route: capstone.eu-de.cf.appdomain.cloud
+      - route: dealers.eu-de.cf.appdomain.cloud
     memory: 128M
     buildpack: python_buildpack
   - name: djangoapp-nginx
     routes:
-      - route: capstone.eu-de.cf.appdomain.cloud/static
+      - route: dealers.eu-de.cf.appdomain.cloud/static
     memory: 128M
     buildpack: staticfile_buildpack
