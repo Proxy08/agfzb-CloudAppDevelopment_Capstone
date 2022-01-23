@@ -1,4 +1,5 @@
 {
-    "COUCH_URL": "",
-    "IAM_API_KEY": ""
+    "COUCH_URL": "https://b9cc5558-b135-4663-ad03-75bbcb35fac6-bluemix.cloudant.com/",
+    "IAM_API_KEY": "Xjgh3ati83SW2Xd-iyDch_AzpepIVM8DEuZIdB8iMEXn",
+    "COUCH_USERNAME": ""
 }
