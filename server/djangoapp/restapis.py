@@ -34,7 +34,15 @@ def get_request(url, **kwargs):
 def get_dealers_from_cf(url, **kwargs):
     results = []
     # Call get_request with a URL parameter
-    json_result = get_request(url)
+     get_request(url)
+     if api_key:
+      # Basic authentication GET
+      json_result = request.get(url, params=params, headers={'Content-Type': 'application/json'},
+                                    auth=HTTPBasicAuth('apikey', api_key))
+     else:
+   # no authentication GET
+       json_result = request.get(url, params=params)
+
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["rows"]
