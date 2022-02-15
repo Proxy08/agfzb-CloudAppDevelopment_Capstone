@@ -33,8 +33,6 @@ def get_request(url, **kwargs):
 
 def get_dealers_from_cf(url, **kwargs):
     results = []
-    # Call get_request with a URL parameter
-     get_request(url)
      if api_key:
       # Basic authentication GET
       json_result = request.get(url, params=params, headers={'Content-Type': 'application/json'},
