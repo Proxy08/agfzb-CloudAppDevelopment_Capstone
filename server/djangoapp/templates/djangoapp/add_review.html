@@ -3,14 +3,73 @@
 <head>
     <meta charset="UTF-8">
     {% load static %}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
 
 </head>
     <body>
     <!--Add review form here -->
+    {% if dealer %}
+            <div class="container">
+                <form action="{% url 'djangoapp:add_review' dealer.id %}" method="post">
+                  {% csrf_token %}
+            
+                  <div class="form-group">
+                <h2>Condensed Table</h2>
+                <p>Review for the : {{dealer.full_name}}</p>            
+              </div>
+              <div class="form-group">
+                <label for="formGroupExampleInput">Car name</label>
+                <input type="text" class="form-control" id="car_name" name="car_name" placeholder="Example input">
+              </div>
+                <div class="form-group">
+                  <label for="formGroupExampleInput">Car Model</label>
+                  <input type="text" class="form-control" id="car_model" name="car_model" placeholder="Example input">
+                </div>
+                <div class="form-group">
+                  <label for="formGroupExampleInput2">Car Maker</label>
+                  <input type="text" class="form-control" id="car_maker" name="car_maker" placeholder="Another input">
+                </div>
+
+                  <div class="form-group">
+                    <label for="formGroupExampleInput2">Car Year</label>
+                    <input type="number" class="form-control" id="car_year" name="car_year" placeholder="Another input">
+                  </div>
+                  <div class="custom-control custom-switch">
+                    <input type="text" class="custom-control-input" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" value="False" aria-controls="collapseExample"  id="customSwitch1" name="purchased">
+                    <label class="custom-control-label" for="customSwitch1">Purchased ?</label>
+                  </div>
+                  <div class="collapse" id="collapseExample">
+                    <select name="car" id="car" class="form-select" required>
+                      {% for car in cars %}
+                          <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                      {% endfor %}
+                 </select>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput2">Purchase date</label>
+                        <input type="date" class="form-control" id="purchased_date" name="purchased_date" placeholder="Another input">
+                      </div>
+                  </div>
+
+
+              <div class="form-group">
+                <label for="exampleFormControlTextarea1">Write your review</label>
+                <textarea class="form-control" id="review" name="review" rows="2" required></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">Review</button>
+            </form>
+        </div>
+        {% endif %}
+
     </body>
+    <script type="text/javascript">
+      $('.date-own').datepicker({
+         format: 'mm/dd/yyyy'
+       });
+ </script>
 </html>

@@ -10,9 +10,113 @@
     <body>
 
     <!--Add a nav bar here -->
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link" href="{% url 'djangoapp:about' %}">About </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'djangoapp:contact' %}">Contact</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li>
+                <a class="btn btn-link" href="#">{{ user.first_name }}({{ user.username }})</a>
+                <a class="btn btn-link" href="">Logout</a>
+            </li>
+            {% else %}
+            <li>
+                <form class="form-inline" action="" method="post">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Username" name="username" >
+                        <input type="password" class="form-control" placeholder="Username" name="psw" >
+                        <button class="btn btn-primary" type="submit">Login</button>
+                        <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                    </div>
+                </form>
+            </li>
+            {% endif %}
+        </ul>
+        </div>
+        
+      </nav>
     <!-- Add reviews as cards -->
+    <main role="main" class="container pt-3">
+        
+        {% if reviews %}
+        <div class="card-columns">
+            {% for review in reviews %}
+            
+                <div class="card" >
+                    <div class="card-header">
+                        <div class="card-body text-center">
+                            <img class="card-img-left" src="{{MEDIA_URL}}/emoji/{{review.sentiment}}.png" width="20" height="20">  <h5 class="card-title">{{review.name}}</h5>
+                            <p id="sentiment" class="card-text">{{review.review}}</p>
+                         </div>
+                    </div>
+                    
 
+                     <div class="card-footer text-muted text-center" style="min-height: 74px;">
+                    {% if review.purchase == True%}   
+                        {{review.car_year}} {{review.car_make}} {{review.car_model}}
+                        <br>
+                        Purchased on: {{review.purchase_date}}
+                    {% else %}
+                        <br>
+                        Reviewer did not make a purchase.
+                    {% endif %}
+                    </div>
+                </div>
+                
+            {% endfor %}
+            <div class="card ">
+                     <div class="card-header">
+                            <h5 class="card-title text-center pt-1">Write Your Own Review!</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="card-text">Want to review this dealership?</p>
+                        <p class="card-text">Click the button below!</p>
+                    </div>
+                    <div class="card-footer text-center" style="min-height: 74px;">
+                        {% if user.is_authenticated %}
+                            <a class="btn btn-warning btn-lg" type="submit" href="{% url 'djangoapp:add_review' dealer_id %}">Write a Review!</a>
+                        {% else %}
+                            <p class="btn btn-success btn-lg" disabled>Login to write a review!</p>
+                        {% endif %}
+                    </div>
+                     
+                </div>
+            </div>
+        {% else %}
+            <div class="card">
+                     <div class="card-header">
+                            <h5 class="card-title text-center">No Reviews</h5>
+                    </div>
+                    <div class="card-body">
+                    
+                    
+                    <p class="card-text text-center">There are no reviews for this dealership. Be the first to write one!</p>
+
+                    </div>
+                    <div class="card-footer text-center" style="min-height: 74px;">
+                        {% if user.is_authenticated %}
+                            <a class="btn btn-warning btn-lg" type="submit" href="{% url 'djangoapp:add_review' dealer_id %}">Write a Review!</a>
+                        {% else %}
+                            <p class="btn btn-success nohover">Login to write a review!</p>
+                        {% endif %}
+                    </div>
+                     
+                </div>
+        {% endif %}
+</main>
     </body>
 
 </html>
