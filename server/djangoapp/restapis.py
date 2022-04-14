@@ -104,8 +104,8 @@ print('sentiment: ')
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
 # def analyze_review_sentiments(text):
 def analyze_review_sentiments(text):
-    API = os.environ.get("API")
-    URL = os.environ.get("URL")
+    API = "TssHvxUZ7WS6E1GEfOE0ty9Bjj4grbPifnmAsGLbCcJZ"
+    URL = "https://api.eu-de.natural-language-understanding.watson.cloud.ibm.com/instances/9cc94652-0fc2-4d03-9d3d-10920ff388f8"
     print('text: ')
     print(text)
     # In the constructor, letting the SDK manage the token
