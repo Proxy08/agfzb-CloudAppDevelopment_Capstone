@@ -146,6 +146,7 @@ def add_review(request, dealer_id):
         new_review['car_make'] = request.POST['car_maker']
         new_review['car_year'] = request.POST['car_year']
         purchase = request.POST['purchased']
+        new_review['purchase'] = purchase
         print(purchase)
         if purchase == False :
             new_review['purchase_date'] = False

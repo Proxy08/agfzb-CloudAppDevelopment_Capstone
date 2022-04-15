@@ -10,9 +10,6 @@ from ibm_watson import AssistantV1
 from ibm_watson import NaturalLanguageUnderstandingV1
 from ibm_watson.natural_language_understanding_v1 import Features, EntitiesOptions, KeywordsOptions, EmotionOptions
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
-from dotenv import load_dotenv
-
-load_dotenv()  # take environment variables from .env.fhn,j
 
 
 #response = assistant.list_workspaces(headers={'Custom-Header': 'custom_value'})
@@ -80,10 +77,8 @@ def get_dealers_from_cf(url, **kwargs):
 # - Parse JSON results into a DealerView object list
 def get_dealer_reviews_from_cf(url, id):
     results = []
-    print(id)
     json_results = get_request(url)
     print(url)
-    image = "/static/media/emoji/neutral.png" 
     if json_results:
         # Get the row list in JSON as dealers
         reviews = json_results["rows"]
@@ -91,6 +86,7 @@ def get_dealer_reviews_from_cf(url, id):
         for review in reviews:
             # Get its content in `doc` object
             review_doc = review["doc"]
+            print(review_doc)
             sentiment = analyze_review_sentiments(review_doc["review"])
             # Create a CarDealer object with values in `doc` object
             review_obj = DealerReview(name=review_doc["name"], dealership=review_doc["dealership"],
@@ -98,7 +94,9 @@ def get_dealer_reviews_from_cf(url, id):
                                    car_year=review_doc["car_year"],
                                    purchase=review_doc["purchase"], purchase_date=review_doc["purchase_date"],sentiment= sentiment,id=review_doc["id"])
             results.append(review_obj)
-        review = getReviewById(results, id) 
+        review = getReviewById(results, id)
+        print("review:---------------")
+        print(review)
     return review
 print('sentiment: ')
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
@@ -132,6 +130,7 @@ def getById(dealers,id):
     return result
 
 def getReviewById(dealers,id):
+    
     result = []
-    result = [x for x in dealers if x.dealership == id]
+    result = [x for x in dealers if x.dealership[0] == id]
     return result
